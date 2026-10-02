@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A rooftop water tank and a tap explain how a systematic withdrawal plan pays you a steady monthly amount, with a calculator for how long it lasts.">
+<meta property="og:title" content="Rooftop Tank SWP">
+<meta property="og:description" content="How a systematic withdrawal plan works, explained with a water tank. Try the calculator.">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Rooftop Tank SWP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: single column of big panels, one idea each; picture first, words second. */
+:root{
+  --bg:#f3f6f8; --panel:#ffffff; --ink:#10222e; --muted:#51666f; --line:#d5dfe5;
+  --water:#1e88c9; --water-soft:#cfe6f5; --bucket:#e8920c; --bucket-soft:#fbe8c8; --warn:#b3382c; --warn-soft:#f8dcd8;
+  --display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --body:'DM Sans',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c161d; --panel:#13222c; --ink:#e7f0f5; --muted:#9bb0ba; --line:#243a47;
+  --water:#4aa8e6; --water-soft:#1a3a50; --bucket:#f2a93b; --bucket-soft:#3d2d12; --warn:#f08a7e; --warn-soft:#3b1f1c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c161d; --panel:#13222c; --ink:#e7f0f5; --muted:#9bb0ba; --line:#243a47;
+  --water:#4aa8e6; --water-soft:#1a3a50; --bucket:#f2a93b; --bucket-soft:#3d2d12; --warn:#f08a7e; --warn-soft:#3b1f1c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;padding-inline:16px;padding-block:32px 48px}
+main{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:var(--display);text-wrap:balance;line-height:1.08;margin:0}
+h1{font-size:clamp(2.2rem,7vw,3.4rem);font-weight:800}
+h2{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:800}
+p{margin:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.lede{color:var(--muted);font-size:1.15rem;max-width:34ch}
+.tag{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+svg{display:block;width:100%;height:auto;max-width:100%}
+.t{fill:var(--ink);font-family:var(--body);font-size:15px;font-weight:700}
+.tm{fill:var(--muted);font-family:var(--body);font-size:13px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.step{display:flex;flex-direction:column;gap:8px;min-width:0}
+.step p{font-size:1rem}
+.step b{font-family:var(--display);font-size:1.2rem}
+.play{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;font-weight:500;min-width:0}
+input[type=number]{font:inherit;font-size:1.05rem;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;font-variant-numeric:tabular-nums}
+input:focus-visible{outline:3px solid var(--water);outline-offset:1px}
+.answer{font-family:var(--display);font-size:clamp(1.4rem,4.5vw,1.9rem);font-weight:800;text-wrap:balance}
+.answer em{font-style:normal;color:var(--bucket)}
+.note{font-size:.85rem;color:var(--muted)}
+.risk{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.risk div{background:var(--warn-soft);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.risk b{color:var(--warn);font-family:var(--display);font-size:1.15rem}
+.risk p{font-size:1rem}
+.recap{font-family:var(--display);font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.2;text-wrap:balance;padding:8px 4px}
+.drip{animation:drip 2.4s ease-in infinite}
+@keyframes drip{0%{transform:translateY(-6px);opacity:0}30%{opacity:1}100%{transform:translateY(34px);opacity:0}}
+.rain{animation:drip 3s ease-in infinite}
+@media (prefers-reduced-motion:reduce){.drip,.rain{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+
+<main>
+  <header class="panel" style="gap:12px">
+    <span class="tag">Systematic withdrawal plan</span>
+    <h1>A rooftop water tank with a tap.</h1>
+    <p class="lede">That is how you get a steady paycheck from money you already saved.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="h-pic">
+    <h2 id="h-pic">The picture</h2>
+    <svg viewBox="0 0 640 330" role="img" aria-label="A rooftop tank fed by rain. A small tap drips water into a bucket every month.">
+      <!-- rain -->
+      <g fill="var(--water)">
+        <path class="rain" d="M150 18c-6 10-6 16 0 16s6-6 0-16z"/>
+        <path class="rain" style="animation-delay:.8s" d="M210 10c-6 10-6 16 0 16s6-6 0-16z"/>
+        <path class="rain" style="animation-delay:1.6s" d="M270 20c-6 10-6 16 0 16s6-6 0-16z"/>
+      </g>
+      <!-- tank -->
+      <rect x="110" y="70" width="200" height="190" rx="14" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/>
+      <rect x="113" y="130" width="194" height="127" rx="11" fill="var(--water)"/>
+      <path d="M113 130q24-10 48 0t48 0 48 0 48 0" fill="none" stroke="var(--panel)" stroke-width="3" opacity=".6"/>
+      <text class="t" x="210" y="205" text-anchor="middle" fill="#fff" style="fill:#fff">Your savings</text>
+      <!-- legs -->
+      <path d="M140 260v34M280 260v34" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M90 296h240" stroke="var(--muted)" stroke-width="3" stroke-linecap="round"/>
+      <!-- tap -->
+      <path d="M310 230h46v14" fill="none" stroke="var(--ink)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="333" cy="222" r="7" fill="var(--bucket)"/>
+      <path class="drip" d="M356 252c-6 10-6 16 0 16s6-6 0-16z" fill="var(--water)"/>
+      <!-- bucket -->
+      <path d="M322 276h68l-8 40h-52z" fill="var(--bucket)"/>
+      <ellipse cx="356" cy="276" rx="34" ry="5" fill="var(--bucket-soft)" stroke="var(--bucket)" stroke-width="2"/>
+      <!-- labels -->
+      <text class="t" x="430" y="236">Tap: same amount</text>
+      <text class="t" x="430" y="256">every month</text>
+      <text class="tm" x="430" y="300">You set it. It runs itself.</text>
+      <text class="tm" x="330" y="40">Rain = your money earning more</text>
+    </svg>
+    <p>The tank holds your savings. The tap lets out a fixed amount each month. The bucket is your pay.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-steps">
+    <h2 id="h-steps">Three moves</h2>
+    <div class="steps">
+      <div class="step">
+        <svg viewBox="0 0 120 90" role="img" aria-label="A full tank"><rect x="30" y="10" width="60" height="70" rx="8" fill="none" stroke="var(--ink)" stroke-width="3"/><rect x="33" y="22" width="54" height="55" rx="6" fill="var(--water)"/></svg>
+        <b>Fill the tank</b>
+        <p>Put a lump of money into an investment pot. This is a big shared pot, run by professionals.</p>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 120 90" role="img" aria-label="A tap with a bucket"><path d="M20 30h50v14" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="45" cy="22" r="7" fill="var(--bucket)"/><path d="M70 52c-5 9-5 14 0 14s5-5 0-14z" fill="var(--water)"/><path d="M52 66h36l-5 20H57z" fill="var(--bucket)"/></svg>
+        <b>Set the tap</b>
+        <p>Pick an amount and a day. Say Rs 8,000 on the 1st.</p>
+      </div>
+      <div class="step">
+        <svg viewBox="0 0 120 90" role="img" aria-label="Rain refilling the tank"><rect x="30" y="30" width="60" height="50" rx="8" fill="none" stroke="var(--ink)" stroke-width="3"/><rect x="33" y="48" width="54" height="29" rx="6" fill="var(--water)"/><g fill="var(--water)"><path d="M45 6c-4 7-4 11 0 11s4-4 0-11z"/><path d="M62 2c-4 7-4 11 0 11s4-4 0-11z"/><path d="M79 8c-4 7-4 11 0 11s4-4 0-11z"/></g></svg>
+        <b>Let it rain</b>
+        <p>What is left in the tank keeps growing, or shrinking, with the market.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-play">
+    <h2 id="h-play">Try the tap</h2>
+    <p>Change the numbers. Watch how long the tank lasts. These are example figures, not a forecast.</p>
+    <div class="play">
+      <label for="pot">Tank size (Rs)<input id="pot" type="number" min="0" step="10000" value="1000000" inputmode="numeric"></label>
+      <label for="tap">Tap, per month (Rs)<input id="tap" type="number" min="0" step="500" value="8000" inputmode="numeric"></label>
+      <label for="rain">Rain, per year (%)<input id="rain" type="number" step="0.5" value="8" inputmode="decimal"></label>
+    </div>
+    <p class="answer" id="answer" aria-live="polite"></p>
+    <svg id="chart" viewBox="0 0 640 220" role="img" aria-label="Tank level over time"></svg>
+    <p class="note">How the math works: rain is a true yearly return (10% means the tank grows exactly 10% over a year), split into equal monthly steps. The tap runs at the end of each month. Rain is assumed to be the same every year. Real markets are bumpy, which is exactly the risk below.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="h-risk">
+    <h2 id="h-risk">Where the tank can run dry</h2>
+    <div class="risk">
+      <div><b>A dry spell early</b><p>If the market falls in the first years, the tap still pours the same amount. The tank drains faster, and a later recovery has less water to work with.</p></div>
+      <div><b>Tap bigger than rain</b><p>If you take out more than the tank earns, you are eating the tank itself. It will empty. Only the date is in question.</p></div>
+      <div><b>The taxman</b><p>Each drop that leaves may count as a sale. Gains can be taxed. Check your country's rules and whether your pot offers this plan at all.</p></div>
+    </div>
+  </section>
+
+  <p class="recap"><strong>A withdrawal plan turns a lump of savings into a steady monthly paycheck, and it lasts only as long as the tap stays smaller than the rain.</strong></p>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const MAX_MONTHS = 600;
+const fmt = n => Math.round(n).toLocaleString('en-IN');
+
+function simulate(pot, tap, yearlyPct) {
+  const r = Math.pow(1 + yearlyPct / 100, 1 / 12) - 1;
+  const levels = [pot];
+  let bal = pot;
+  while (levels.length <= MAX_MONTHS) {
+    bal = bal * (1 + r) - tap;
+    if (bal <= 0) { levels.push(0); break; }
+    levels.push(bal);
+  }
+  return levels;
+}
+
+function draw(levels, pot) {
+  const W = 640, H = 220, L = 54, R = 16, T = 14, B = 34;
+  const months = Math.max(levels.length - 1, 1);
+  const top = Math.max(pot, ...levels);
+  const x = m => L + (m / months) * (W - L - R);
+  const y = v => T + (1 - v / top) * (H - T - B);
+  const pts = levels.map((v, m) => `${x(m).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const years = months / 12;
+  const step = years > 30 ? 10 : years > 12 ? 5 : years > 5 ? 2 : 1;
+  let ticks = '';
+  for (let yr = 0; yr <= years; yr += step) {
+    ticks += `<text class="tm" x="${x(yr * 12)}" y="${H - 10}" text-anchor="middle">${yr}y</text>`;
+  }
+  $('chart').innerHTML =
+    `<line x1="${L}" y1="${y(0)}" x2="${W - R}" y2="${y(0)}" stroke="var(--line)" stroke-width="2"/>` +
+    `<line x1="${L}" y1="${T}" x2="${L}" y2="${y(0)}" stroke="var(--line)" stroke-width="2"/>` +
+    `<text class="tm" x="${L - 6}" y="${T + 10}" text-anchor="end">${fmt(top / 1000)}k</text>` +
+    `<text class="tm" x="${L - 6}" y="${y(0)}" text-anchor="end">0</text>` +
+    `<polygon points="${x(0)},${y(0)} ${pts} ${x(months)},${y(0)}" fill="var(--water-soft)"/>` +
+    `<polyline points="${pts}" fill="none" stroke="var(--water)" stroke-width="3" stroke-linejoin="round"/>` +
+    ticks;
+}
+
+function update() {
+  const pot = Math.max(+$('pot').value || 0, 0);
+  const tap = Math.max(+$('tap').value || 0, 0);
+  const rain = +$('rain').value || 0;
+  if (pot === 0) { $('answer').textContent = 'Fill the tank first.'; $('chart').innerHTML = ''; return; }
+  const levels = simulate(pot, tap, rain);
+  draw(levels, pot);
+  const months = levels.length - 1;
+  const emptied = levels[levels.length - 1] === 0;
+  const ans = $('answer');
+  if (!emptied) {
+    ans.innerHTML = `Still <em>Rs ${fmt(levels[levels.length - 1])}</em> in the tank after 50 years.`;
+  } else {
+    const y = Math.floor(months / 12), m = months % 12;
+    ans.innerHTML = `The tank runs dry in <em>${y} years${m ? ' ' + m + ' months' : ''}</em>.`;
+  }
+}
+['pot', 'tap', 'rain'].forEach(id => $(id).addEventListener('input', update));
+update();
+</script>
+</body>
+</html>
